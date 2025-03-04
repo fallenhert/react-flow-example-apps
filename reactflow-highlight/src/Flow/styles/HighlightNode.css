@@ -1,0 +1,49 @@
+/*
+ * @Author: diaosuyang diaosuyang@meituan.com
+ * @Date: 2025-02-14 14:29:53
+ * @LastEditors: diaosuyang diaosuyang@meituan.com
+ * @LastEditTime: 2025-02-14 15:41:34
+ * @FilePath: /react-test-demo/reactflow-highlight-demo/src/Flow/styles/HighlightNode.css
+ * @Description: 
+ */
+.highlight-node {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ff6b6b;
+  background: white;
+  min-width: 150px;
+  box-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
+  transition: all 0.3s ease;
+}
+
+.highlight-node.highlighted {
+  box-shadow: 0 0 0 2px #ff6b6b;
+  border-color: #ff6b6b;
+  background-color: #fff5f5;
+}
+
+.highlight-node.selected {
+  box-shadow: 0 0 0 2px #6b6bff;
+}
+
+.highlight-node-header {
+  font-weight: bold;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.highlight-node-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.highlight-node-item {
+  font-size: 12px;
+  color: #666;
+}
+
+.highlight-node:hover {
+  box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+}

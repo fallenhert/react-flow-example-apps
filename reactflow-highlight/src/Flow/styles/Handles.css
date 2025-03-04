@@ -1,0 +1,23 @@
+/* 隐藏连接点的默认样式 */
+.react-flow__handle {
+  opacity: 0;
+  width: 10px;
+  height: 10px;
+  background: transparent;
+  border: none;
+}
+
+/* 悬停时显示连接点的位置（可选） */
+.react-flow__handle:hover {
+  opacity: 0.3;
+  background: #b1b1b7;
+}
+
+/* 确保连接点仍然可以交互，但视觉上不可见 */
+.react-flow__handle-left {
+  left: -5px;
+}
+
+.react-flow__handle-right {
+  right: -5px;
+}
