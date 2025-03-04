@@ -1,11 +1,14 @@
-import type { BuiltInEdge, Edge, EdgeTypes } from "@xyflow/react";
+import { Edge, type BuiltInEdge, type EdgeTypes } from "@xyflow/react";
 
 import ButtonEdge, { type ButtonEdge as ButtonEdgeType } from "./ButtonEdge";
 
 export const initialEdges = [
-  { id: "a->c", source: "a", target: "c", animated: true },
-  { id: "b->d", source: "b", target: "d", type: "button-edge" },
-  { id: "c->d", source: "c", target: "d", animated: true },
+  { id: "a->b", source: "a", target: "b" },
+  { id: "b->d", source: "b", target: "d" },
+  { id: "c->d", source: "c", target: "d" },
+  { id: "a->e", source: "a", target: "e" },
+  { id: "e->f", source: "e", target: "f" },
+  { id: "e->g", source: "e", target: "g" },
 ] satisfies Edge[];
 
 export const edgeTypes = {

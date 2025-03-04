@@ -1,12 +1,15 @@
-import Flow from '../Flow';
+import { ReactFlowProvider } from "@xyflow/react";
+import Flow from "../Flow";
 
-import './App.css';
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">React Flow - CRA Example</header>
-      <Flow />
+      <ReactFlowProvider>
+        <Flow />
+      </ReactFlowProvider>
     </div>
   );
 }
