@@ -32,6 +32,10 @@ const Flow = () => {
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
   const [initCounter, setInitCounter] = useState(0);
+  const [highlightedNodeId, setHighlightedNodeId] = useState<string | null>(
+    null
+  );
+  const [highlightedEdges, setHighlightedEdges] = useState<string[]>([]);
   const { setCenter, zoomIn, zoomOut, fitView } = useReactFlow();
 
   // 初始化布局
@@ -54,6 +58,25 @@ const Flow = () => {
     }
     setInitCounter(initCounter + 1);
   }, [nodes]);
+
+  const handleNodeClick = useCallback(
+    (event: any, node: any) => {
+      if (highlightedNodeId === node.id) {
+        setHighlightedNodeId(null);
+        setHighlightedEdges([]);
+        return;
+      }
+
+      setHighlightedNodeId(node.id);
+
+      // 获取前后连线
+      const connectedEdges = edges.filter(
+        (edge) => edge.source === node.id || edge.target === node.id
+      );
+      setHighlightedEdges(connectedEdges.map((edge) => edge.id));
+    },
+    [edges, highlightedNodeId]
+  );
 
   const onNodesChange = useCallback((changes: NodeChange[]) => {
     setNodes((nds) => applyNodeChanges(changes, nds));
@@ -110,8 +133,24 @@ const Flow = () => {
       }}
     >
       <ReactFlow
-        nodes={nodes}
-        edges={edges}
+        nodes={nodes.map((node) => {
+          const nodeBody = {
+            ...node,
+            data: {
+              ...node.data,
+              onClick: (event: any) => handleNodeClick(event, node), // 添加点击事件
+              isHighlighted: node.id === highlightedNodeId, // 传递高亮状态
+            },
+          };
+          return nodeBody;
+        })}
+        edges={edges.map((edge) => ({
+          ...edge,
+          style: {
+            stroke: highlightedEdges.includes(edge.id) ? "red" : "gray",
+            strokeWidth: highlightedEdges.includes(edge.id) ? 2 : 1,
+          },
+        }))}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         nodeTypes={nodeTypes}
