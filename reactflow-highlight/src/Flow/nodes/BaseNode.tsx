@@ -2,7 +2,7 @@
  * @Author: diaosuyang diaosuyang@meituan.com
  * @Date: 2025-02-14 14:58:22
  * @LastEditors: diaosuyang diaosuyang@meituan.com
- * @LastEditTime: 2025-03-05 10:44:20
+ * @LastEditTime: 2025-03-05 10:54:11
  * @FilePath: /react-test-demo/react-flow-example-apps/reactflow-highlight/src/Flow/nodes/BaseNode.tsx
  * @Description:
  */
@@ -33,7 +33,17 @@ const BaseNode = ({ data }: NodeProps<BaseNodeData>) => {
       onClick={data.onClick}
     >
       <Handle type="target" position={Position.Left} />
-      <div className="base-node-header">{data.label}</div>
+      <div className="base-node-header">
+        <div>{data.label}</div>
+        <button
+          onClick={(event) => {
+            event.stopPropagation();
+            window.open("https://www.baidu.com");
+          }}
+        >
+          详情
+        </button>
+      </div>
       <div className="base-node-content">
         {data.items?.map((item, index) => (
           <div key={index} className="base-node-item">
