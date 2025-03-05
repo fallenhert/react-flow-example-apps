@@ -22,7 +22,7 @@ import "./styles/Controls.css";
 import "./styles/Handles.css";
 import { initialNodes, nodeTypes } from "./data/nodes";
 import { initialEdges, defaultEdgeOptions } from "./data/edges";
-import { getLayoutedElements } from "./utils";
+import { getLayoutedElements, getLayoutedElementsFromDagre } from "./utils";
 
 const proOptions = {
   hideAttribution: true, // 隐藏水印
@@ -36,6 +36,7 @@ const Flow = () => {
     null
   );
   const [highlightedEdges, setHighlightedEdges] = useState<string[]>([]);
+  const [highlightedNodes, setHighlightedNodes] = useState<string[]>([]); // 新增状态
   const { setCenter, zoomIn, zoomOut, fitView } = useReactFlow();
 
   // 初始化布局
@@ -64,6 +65,7 @@ const Flow = () => {
       if (highlightedNodeId === node.id) {
         setHighlightedNodeId(null);
         setHighlightedEdges([]);
+        setHighlightedNodes([]);
         return;
       }
 
@@ -74,6 +76,13 @@ const Flow = () => {
         (edge) => edge.source === node.id || edge.target === node.id
       );
       setHighlightedEdges(connectedEdges.map((edge) => edge.id));
+
+      const connectedNodes = connectedEdges.flatMap((edge) => {
+        return [edge.source, edge.target]; // 返回源节点和目标节点
+      });
+
+      // 设置高亮的节点
+      setHighlightedNodes(connectedNodes);
     },
     [edges, highlightedNodeId]
   );
@@ -139,7 +148,8 @@ const Flow = () => {
             data: {
               ...node.data,
               onClick: (event: any) => handleNodeClick(event, node), // 添加点击事件
-              isHighlighted: node.id === highlightedNodeId, // 传递高亮状态
+              isHighlighted: highlightedNodeId === node.id, // 传递高亮状态
+              isConnected: highlightedNodes.includes(node.id),
             },
           };
           return nodeBody;

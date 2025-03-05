@@ -2,7 +2,7 @@
  * @Author: diaosuyang diaosuyang@meituan.com
  * @Date: 2025-02-14 14:58:22
  * @LastEditors: diaosuyang diaosuyang@meituan.com
- * @LastEditTime: 2025-03-04 19:32:33
+ * @LastEditTime: 2025-03-05 10:44:20
  * @FilePath: /react-test-demo/react-flow-example-apps/reactflow-highlight/src/Flow/nodes/BaseNode.tsx
  * @Description:
  */
@@ -14,14 +14,22 @@ interface BaseNodeData {
   label: string;
   items?: Array<{ title: string; name: string }>;
   onClick: (event: React.MouseEvent) => void; // 添加点击事件类型
-  isHighlighted: boolean; // 添加高亮状态
+  isHighlighted?: boolean; // 添加高亮状态
+  isConnected?: boolean; // 添加链接状态
 }
 
 const BaseNode = ({ data }: NodeProps<BaseNodeData>) => {
+  let bgColor = "white";
+  if (data.isConnected) {
+    bgColor = "blue";
+  }
+  if (data.isHighlighted) {
+    bgColor = "red";
+  }
   return (
     <div
       className="base-node"
-      style={{ backgroundColor: data.isHighlighted ? "red" : "white" }}
+      style={{ backgroundColor: bgColor }}
       onClick={data.onClick}
     >
       <Handle type="target" position={Position.Left} />
